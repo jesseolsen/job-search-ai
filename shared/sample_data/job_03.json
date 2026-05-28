@@ -1,0 +1,21 @@
+{
+  "title": "Data Engineer",
+  "company": "DataFlow Inc",
+  "raw_text": "Build and maintain our data infrastructure.",
+  "required_skills": [
+    "Python",
+    "SQL",
+    "Spark",
+    "AWS"
+  ],
+  "nice_to_have_skills": [
+    "Scala",
+    "Airflow"
+  ],
+  "seniority": "mid",
+  "salary_range": [
+    110000,
+    160000
+  ],
+  "extracted_at": "2026-05-28T10:25:03.888137"
+}

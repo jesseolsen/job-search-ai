@@ -1,0 +1,21 @@
+{
+  "title": "DevOps Engineer",
+  "company": "CloudSys",
+  "raw_text": "Join our infrastructure team managing Kubernetes clusters.",
+  "required_skills": [
+    "Kubernetes",
+    "Docker",
+    "AWS",
+    "Python"
+  ],
+  "nice_to_have_skills": [
+    "Terraform",
+    "Go"
+  ],
+  "seniority": "mid",
+  "salary_range": [
+    130000,
+    170000
+  ],
+  "extracted_at": "2026-05-28T10:25:03.888297"
+}

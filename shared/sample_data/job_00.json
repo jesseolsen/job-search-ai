@@ -1,0 +1,22 @@
+{
+  "title": "Senior Software Engineer",
+  "company": "TechCorp",
+  "raw_text": "We're looking for a senior engineer to lead backend infrastructure projects.",
+  "required_skills": [
+    "Python",
+    "PostgreSQL",
+    "AWS",
+    "Docker"
+  ],
+  "nice_to_have_skills": [
+    "Kubernetes",
+    "Go",
+    "GraphQL"
+  ],
+  "seniority": "senior",
+  "salary_range": [
+    150000,
+    200000
+  ],
+  "extracted_at": "2026-05-28T10:25:03.887493"
+}

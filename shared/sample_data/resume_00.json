@@ -1,0 +1,10 @@
+{
+  "raw_text": "Jane Doe, Senior Software Engineer. Experienced with Python, PostgreSQL, AWS, Docker, Kubernetes.",
+  "sections": {
+    "SUMMARY": "6 years building scalable backend systems using Python and cloud.",
+    "EXPERIENCE": "Senior Engineer at TechCorp (2020-2024): Python, PostgreSQL, AWS, Docker, Kubernetes",
+    "EDUCATION": "BS Computer Science, State University (2018)",
+    "SKILLS": "Python, PostgreSQL, AWS, Docker, Kubernetes, REST APIs, Git, Linux",
+    "PROJECTS": "ML pipeline processor in PyTorch"
+  }
+}

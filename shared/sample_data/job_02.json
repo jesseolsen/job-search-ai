@@ -1,0 +1,22 @@
+{
+  "title": "Full Stack Developer",
+  "company": "StartupXYZ",
+  "raw_text": "Help us scale our web platform with React and Node.js.",
+  "required_skills": [
+    "JavaScript",
+    "React",
+    "Node.js",
+    "PostgreSQL"
+  ],
+  "nice_to_have_skills": [
+    "TypeScript",
+    "Docker",
+    "AWS"
+  ],
+  "seniority": "mid",
+  "salary_range": [
+    100000,
+    140000
+  ],
+  "extracted_at": "2026-05-28T10:25:03.887974"
+}

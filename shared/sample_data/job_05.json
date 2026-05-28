@@ -1,0 +1,21 @@
+{
+  "title": "Backend Engineer",
+  "company": "WebServices Co",
+  "raw_text": "Build backend services using Java and Spring Boot.",
+  "required_skills": [
+    "Java",
+    "Spring",
+    "PostgreSQL",
+    "REST APIs"
+  ],
+  "nice_to_have_skills": [
+    "Kafka",
+    "Redis"
+  ],
+  "seniority": "junior",
+  "salary_range": [
+    80000,
+    120000
+  ],
+  "extracted_at": "2026-05-28T10:25:03.888454"
+}

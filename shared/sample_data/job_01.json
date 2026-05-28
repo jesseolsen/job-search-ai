@@ -1,0 +1,21 @@
+{
+  "title": "Machine Learning Engineer",
+  "company": "AI Labs",
+  "raw_text": "Join our ML team to build production recommendation systems.",
+  "required_skills": [
+    "Python",
+    "PyTorch",
+    "TensorFlow",
+    "SQL"
+  ],
+  "nice_to_have_skills": [
+    "MLOps",
+    "Kubernetes"
+  ],
+  "seniority": "mid",
+  "salary_range": [
+    120000,
+    180000
+  ],
+  "extracted_at": "2026-05-28T10:25:03.887784"
+}

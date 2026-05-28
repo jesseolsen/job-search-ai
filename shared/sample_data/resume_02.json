@@ -1,0 +1,10 @@
+{
+  "raw_text": "Alice Chen, Data Engineer. Proficient in Python, SQL, Spark, and AWS.",
+  "sections": {
+    "SUMMARY": "4 years in data infrastructure and analytics.",
+    "EXPERIENCE": "Data Engineer at BigData Corp (2020-2024): Python, SQL, Spark, AWS, Airflow",
+    "EDUCATION": "MS Data Science, Tech University (2020)",
+    "SKILLS": "Python, SQL, Apache Spark, AWS, Airflow, Kafka, Git",
+    "PROJECTS": "Built data pipeline processing 100M+ events daily"
+  }
+}

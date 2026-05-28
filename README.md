@@ -4,7 +4,7 @@ A suite of AI-powered career tools for automated job application analysis and pr
 
 ## Projects
 
-### 1. Claude API Parser (`04-claude-api-parser`)
+### 1. Claude API Parser (`01-claude-api-parser`)
 **Tool use, prompt caching, streaming**
 
 A structured job description parser using Claude's tool use feature. Extracts skills, seniority level, salary range, and red flags from raw job postings. Demonstrates prompt caching for cost savings on repeated calls and streaming for real-time output.
@@ -13,7 +13,7 @@ A structured job description parser using Claude's tool use feature. Extracts sk
 - **Output**: Structured `JobDescription` schema (consumed by all other projects)
 - **Status**: Weekend 1
 
-### 2. LangGraph Agent (`01-langgraph-agent`)
+### 2. LangGraph Agent (`02-langgraph-agent`)
 **Multi-agent orchestration, state graphs, conditional routing**
 
 A multi-step workflow that analyzes a job description and compares it against your resume to produce a tailored preparation plan. Demonstrates graph-based orchestration with conditional branching.
@@ -23,7 +23,7 @@ A multi-step workflow that analyzes a job description and compares it against yo
 - **Output**: Preparation plan with cover letter talking points, interview questions, prep checklist
 - **Status**: Weekend 2
 
-### 3. PyTorch Classifier (`02-pytorch-classifier`)
+### 3. PyTorch Classifier (`03-pytorch-classifier`)
 **Neural networks, embeddings, training loops**
 
 A text classifier that identifies resume sections (EXPERIENCE, EDUCATION, SKILLS, etc.). Built from scratch using PyTorch to understand how embeddings work before using pretrained models.
@@ -33,7 +33,7 @@ A text classifier that identifies resume sections (EXPERIENCE, EDUCATION, SKILLS
 - **Output**: Section classification (EXPERIENCE, EDUCATION, SKILLS, PROJECTS, SUMMARY, OTHER)
 - **Status**: Weekend 3
 
-### 4. TensorFlow Predictor (`03-tensorflow-predictor`)
+### 4. TensorFlow Predictor (`04-tensorflow-predictor`)
 **Keras API, preprocessing layers, callbacks, model evaluation**
 
 A salary range predictor that estimates job salary band from job description text and seniority signals. Demonstrates Keras's high-level API and comparison with PyTorch's explicit approach.
@@ -96,7 +96,6 @@ This structure keeps projects lightweight and testable independently.
 
 ## References
 
-Built to practice alongside these libraries' official documentation:
 - [LangGraph docs](https://langchain-ai.github.io/langgraph/)
 - [PyTorch docs](https://pytorch.org/docs/stable/index.html)
 - [TensorFlow/Keras docs](https://www.tensorflow.org/api_docs)

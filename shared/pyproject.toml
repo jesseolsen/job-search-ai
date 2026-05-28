@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "job-search-ai-shared"
+version = "0.1.0"
+description = "Shared schemas and utilities for job search AI tools"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.0.0",
+]

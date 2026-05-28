@@ -2,6 +2,42 @@
 
 A suite of AI-powered career tools for automated job application analysis and preparation. Each component leverages specialized ML/AI frameworks for different aspects of the job search workflow.
 
+## Quick Start
+
+### Setup
+
+Create and activate a virtual environment:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Install dependencies for a specific project:
+
+```bash
+pip install -r 01-claude-api-parser/requirements.txt
+```
+
+Then run the demo or tests:
+
+```bash
+python3 01-claude-api-parser/demo.py
+pytest 01-claude-api-parser/test_parser.py -v
+```
+
+### Set API Key
+
+For the Claude API Parser, you'll need Anthropic API credentials:
+
+```bash
+# Option 1: Environment variable
+export ANTHROPIC_API_KEY=sk-...
+
+# Option 2: .env file (already in .gitignore)
+echo "ANTHROPIC_API_KEY=sk-..." > .env
+```
+
 ## Projects
 
 ### 1. Claude API Parser (`01-claude-api-parser`)

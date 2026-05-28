@@ -1,220 +1,92 @@
-# TensorFlow Predictor
+# Salary Band Predictor (TensorFlow)
 
-Predicts job salary band from position characteristics using Keras. Provides salary estimation for job postings based on description text and seniority level.
+Predicts job salary band from job description text and seniority level using Keras/TensorFlow.
 
-## Features
+## Overview
 
-- **Keras Sequential and Functional APIs**: Compare two API styles
-- **Built-in preprocessing**: `TextVectorization` layer for text encoding
-- **Multi-input model**: Text features + categorical seniority
-- **Training with callbacks**: `EarlyStopping`, `ModelCheckpoint`
-- **Evaluation**: Confusion matrix, loss curves, per-class accuracy
-- **Model serialization**: Save/load with `model.save()` / `tf.keras.models.load_model()`
-
-## Quick Start
-
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Install shared schemas
-pip install -e ../shared
-
-# Download dataset (automated)
-python download_data.py
-
-# Prepare and train
-python train.py
-
-# Run evaluation
-jupyter notebook eval.ipynb
-```
-
-## Project Structure
-
-```
-03-tensorflow-predictor/
-├── README.md
-├── requirements.txt
-├── download_data.py     # Kaggle dataset fetch
-├── model.py            # Keras model definitions
-├── train.py           # Training pipeline
-├── eval.ipynb         # Evaluation notebook (confusion matrix, curves)
-├── test_predictor.py  # Unit tests
-├── model/             # Saved model directory
-└── data/
-    └── jobs.csv       # Training data
-```
-
-## Key Concepts
-
-### Keras Sequential API
-
-```python
-from tensorflow import keras
-
-model = keras.Sequential([
-    keras.layers.TextVectorization(output_mode="int"),
-    keras.layers.Embedding(input_dim=5000, output_dim=128),
-    keras.layers.LSTM(64),
-    keras.layers.Dense(32, activation="relu"),
-    keras.layers.Dense(4, activation="softmax")  # 4 salary bands
-])
-
-model.compile(
-    optimizer="adam",
-    loss="categorical_crossentropy",
-    metrics=["accuracy"]
-)
-
-model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=10)
-```
-
-### Keras Functional API (for multi-input)
-
-```python
-text_input = keras.Input(shape=(1,), dtype=tf.string, name="job_description")
-text_vec = keras.layers.TextVectorization()(text_input)
-text_embed = keras.layers.Embedding(5000, 128)(text_vec)
-text_lstm = keras.layers.LSTM(64)(text_embed)
-
-seniority_input = keras.Input(shape=(1,), dtype=tf.int32, name="seniority")
-seniority_embed = keras.layers.Embedding(5, 8)(seniority_input)
-seniority_flat = keras.layers.Flatten()(seniority_embed)
-
-merged = keras.layers.Concatenate()([text_lstm, seniority_flat])
-output = keras.layers.Dense(4, activation="softmax")(merged)
-
-model = keras.Model(inputs=[text_input, seniority_input], outputs=output)
-```
-
-### Built-in Preprocessing
-
-```python
-# TextVectorization: learned vocabulary + encoding
-text_layer = keras.layers.TextVectorization(
-    max_tokens=5000,
-    output_mode="int"
-)
-text_layer.adapt(training_texts)  # Learn vocabulary
-
-model.add(text_layer)
-```
-
-### Callbacks
-
-```python
-callbacks = [
-    keras.callbacks.EarlyStopping(
-        monitor="val_loss",
-        patience=3,
-        restore_best_weights=True
-    ),
-    keras.callbacks.ModelCheckpoint(
-        "best_model.h5",
-        monitor="val_accuracy",
-        save_best_only=True
-    )
-]
-
-model.fit(X_train, y_train, callbacks=callbacks, epochs=50)
-```
-
-## Model Architecture
-
-```
-Text Input
-    ↓
-[TextVectorization: string → integers]
-    ↓
-[Embedding: integers → dense vectors]
-    ↓
-[LSTM: sequence → context vector]
-    ↙           ↖
-                [Seniority Embedding]
-                      ↓
-[Concatenate]
-    ↓
-[Dense 32, ReLU]
-    ↓
-[Dense 4, Softmax] → Salary Band
-```
+This project demonstrates core TensorFlow/Keras concepts:
+- **Sequential API**: Simple linear stack of layers
+- **Functional API**: Flexible multi-input models with branching
+- **TextVectorization**: Built-in text preprocessing layer
+- **LSTM layers**: Sequence learning for job descriptions
+- **Callbacks**: Early stopping and model checkpointing
+- **Model persistence**: Saving/loading with `.h5` format
 
 ## Salary Bands
 
-The model predicts one of four bands:
-- **Band 0**: Under $80k
-- **Band 1**: $80k–$120k
-- **Band 2**: $120k–$160k
-- **Band 3**: $160k+
+- **<$80k**: Entry-level, junior roles
+- **$80k–$120k**: Mid-level, some experience
+- **$120k–$160k**: Senior-level, leadership
+- **$160k+**: Staff/principal, high expertise
 
-## Dataset
+## Architecture
 
-Uses the "Data Science Job Salaries" dataset from Kaggle (ruchi798):
-- ~14,000 job records
-- Salary, title, company, remote ratio
-- Scoped to 5,000 records for manageable training time
-
-Run `python download_data.py` to fetch (requires Kaggle API credentials).
-
-## Training Output
-
-```bash
-$ python train.py
-
-Loading data (5000 records)...
-Training / validation split: 3500 / 1500
-
-Epoch 1/10
-110/110 [==============================] - 12s 54ms/step
-loss: 0.8234 - accuracy: 0.6123 - val_loss: 0.7856 - val_accuracy: 0.6234
-
-...
-
-Epoch 10/10
-110/110 [==============================] - 11s 52ms/step
-loss: 0.4123 - accuracy: 0.8456 - val_loss: 0.5123 - val_accuracy: 0.8234
-
-Model saved to model/
+### Sequential Model
+```
+Text Input (100)
+    ↓
+Embedding (128-dim)
+    ↓
+LSTM (64 hidden)
+    ↓
+LSTM (32 hidden)
+    ↓
+Dense (32, relu)
+    ↓
+Dense (4 classes, softmax)
 ```
 
-## Evaluation Notebook
+### Functional Model (Multi-Input)
+```
+Text Input ──→ Embedding ──→ LSTM ──→ Dense ──→ Concatenate ──→ Dense ──→ Output
+                                                     ↑
+Seniority Input ──→ Embedding ──→ Dense ────────────┘
+```
 
-`eval.ipynb` produces:
-- Confusion matrix heatmap
-- Training/validation loss curves
-- Per-class accuracy and F1 scores
-- Sample predictions
+## Running
 
-## Testing
+### Training
+```bash
+python3 train.py
+```
 
+Trains two models:
+1. **Sequential**: Text-only predictions
+2. **Functional**: Text + seniority level predictions
+
+### Demo
+```bash
+python3 demo.py
+```
+
+Makes predictions on sample job descriptions with both models.
+
+### Tests
 ```bash
 pytest test_predictor.py -v
+pytest test_predictor.py -v -m integration  # Run integration tests
 ```
 
-Tests validate:
-- Model input shapes are correct
-- Preprocessing layer adapts vocabulary
-- Training reduces loss
-- Inference produces valid salary bands
+## Key Learnings
 
-## Comparison: PyTorch vs. TensorFlow
+1. **TextVectorization Layer**: TensorFlow's built-in text preprocessing—tokenization and padding happen in the model graph.
 
-| Aspect | PyTorch | TensorFlow/Keras |
-|--------|---------|------------------|
-| Training loop | Explicit | Built-in `model.fit()` |
-| Preprocessing | Manual | Layers (TextVectorization) |
-| Debugging | Easy (eager) | Harder (graph mode) |
-| Production | Via ONNX, TorchServe | Via SavedModel, TF Serving |
-| Community | Research-heavy | Industry-standard |
+2. **Sequential vs Functional API**: 
+   - Sequential: Simple, linear models (good for learning)
+   - Functional: Complex architectures with branching, shared layers, multiple inputs/outputs
 
-## References
+3. **Callbacks**: Monitoring and saving best models:
+   - `EarlyStopping`: Stop training if validation metric plateaus
+   - `ModelCheckpoint`: Save weights whenever validation improves
 
-- [Keras API Docs](https://www.tensorflow.org/api_docs/python/keras)
-- [Keras Sequential Model](https://www.tensorflow.org/guide/keras/sequential_model)
-- [Keras Functional API](https://www.tensorflow.org/guide/keras/functional)
-- [Keras Preprocessing Layers](https://www.tensorflow.org/guide/keras_nlp)
+4. **Multi-Input Models**: Text + categorical features combined via concatenation layer.
 
-## Integration
+5. **Training Loop Abstraction**: Unlike PyTorch's explicit loop, Keras/TensorFlow abstracts it behind `model.fit()`.
 
-Salary predictions integrate with job analysis pipeline to provide candidates with market context for opportunities. Output can feed into **01-langgraph-agent** for comprehensive job evaluation.
+## Files
+
+- `predictor.py` - Core implementation (models, training, prediction)
+- `generate_data.py` - Synthetic salary data generation
+- `train.py` - Training script
+- `demo.py` - Inference demo
+- `test_predictor.py` - Comprehensive test suite

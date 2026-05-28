@@ -11,6 +11,13 @@ import sys
 import os
 from pathlib import Path
 
+# Load .env file before anything else
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 

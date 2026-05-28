@@ -90,14 +90,20 @@ def get_system_prompt() -> str:
     """
     return """You are an expert job description analyzer. Your task is to extract structured information from job postings.
 
+CRITICAL: You MUST use the extract_job_details tool for every job description. Do not provide text responses.
+
 When analyzing a job description:
 1. Extract the job title and company name
 2. Identify required and nice-to-have skills
-3. Determine the seniority level needed
-4. If salary information is present, extract it as a [min, max] range
-5. Return the full job posting text
+3. Determine the seniority level needed (junior/mid/senior/staff/unknown)
+4. If salary information is present, extract it as a [min, max] range in USD
+5. Always call the extract_job_details tool with your findings
 
-Always use the extract_job_details tool to return your findings. Be thorough but concise."""
+Guidelines:
+- Be thorough in identifying skills from the job description
+- If company name is not explicit, use "Unknown"
+- If no salary info exists, set salary_range to null
+- Include all mentioned skills in required_skills or nice_to_have_skills"""
 
 
 class JobDescriptionParser:
@@ -133,7 +139,7 @@ class JobDescriptionParser:
             raise ParsingError("Job text cannot be empty")
 
         response = self.client.messages.create(
-            model="claude-opus-4-1",
+            model="claude-opus-4-7",
             max_tokens=1024,
             system=[
                 {
@@ -143,6 +149,7 @@ class JobDescriptionParser:
                 }
             ],
             tools=[get_extraction_tool_schema()],
+            tool_choice={"type": "tool", "name": "extract_job_details"},
             messages=[
                 {
                     "role": "user",
@@ -168,7 +175,7 @@ class JobDescriptionParser:
         narrative_parts = []
 
         with self.client.messages.stream(
-            model="claude-opus-4-1",
+            model="claude-opus-4-7",
             max_tokens=1024,
             system=[
                 {
@@ -178,6 +185,7 @@ class JobDescriptionParser:
                 }
             ],
             tools=[get_extraction_tool_schema()],
+            tool_choice={"type": "tool", "name": "extract_job_details"},
             messages=[
                 {
                     "role": "user",
@@ -214,7 +222,7 @@ class JobDescriptionParser:
         for i, job_text in enumerate(job_texts):
             try:
                 response = self.client.messages.create(
-                    model="claude-opus-4-1",
+                    model="claude-opus-4-7",
                     max_tokens=1024,
                     system=[
                         {
@@ -224,6 +232,7 @@ class JobDescriptionParser:
                         }
                     ],
                     tools=[get_extraction_tool_schema()],
+                    tool_choice={"type": "tool", "name": "extract_job_details"},
                     messages=[
                         {
                             "role": "user",
@@ -278,7 +287,7 @@ class JobDescriptionParser:
             raise ParsingError("Job text cannot be empty")
 
         response = await self.async_client.messages.create(
-            model="claude-opus-4-1",
+            model="claude-opus-4-7",
             max_tokens=1024,
             system=[
                 {
@@ -288,6 +297,7 @@ class JobDescriptionParser:
                 }
             ],
             tools=[get_extraction_tool_schema()],
+            tool_choice={"type": "tool", "name": "extract_job_details"},
             messages=[
                 {
                     "role": "user",

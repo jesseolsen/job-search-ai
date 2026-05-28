@@ -118,7 +118,7 @@ Job: {state['job_requirements']['title']} at {state['job_requirements']['company
 Required Skills: {', '.join(state['job_requirements']['required_skills'])}
 
 Resume:
-{state['resume']['raw_text']}
+{state['resume'].raw_text}
 
 Provide:
 1. Skills that match (from resume that job needs)
@@ -156,7 +156,7 @@ async def identify_gaps_node(state: AgentState) -> dict:
 Job Required: {', '.join(state['job_requirements']['required_skills'])}
 Job Nice-to-Have: {', '.join(state['job_requirements']['nice_to_have_skills'])}
 
-Resume Summary: {state['resume']['raw_text'][:500]}
+Resume Summary: {state['resume'].raw_text[:500]}
 
 Return a JSON object with:
 - missing_required: list of required skills not found in resume
@@ -266,8 +266,8 @@ async def generate_plan_node(state: AgentState) -> dict:
 
 Job: {state['job_requirements']['title']} at {state['job_requirements']['company']}
 
-Candidate Strengths:
-{state['resume_analysis'].get('candidate_strengths', 'See resume')}
+Resume:
+{state['resume'].raw_text[:500]}
 
 Matching Skills: {', '.join(state['skill_gaps'].matching_skills)}
 

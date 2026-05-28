@@ -35,14 +35,15 @@ async def demo_single_analysis():
 
     # Load sample data
     jobs = load_job_postings(n=1)
-    resumes = [load_resume("../shared/sample_data/resume_00.json")]
+    resume_path = str(Path(__file__).parent.parent / "shared" / "sample_data" / "resume_00.json")
+    resume_data = load_resume(resume_path)
 
-    if not jobs or not resumes:
+    if not jobs or not resume_data:
         print("Error: Could not load sample data")
         return
 
     job = jobs[0]
-    resume = ResumeText(**resumes[0])
+    resume = ResumeText(**resume_data)
 
     print(f"\nAnalyzing: {job.title} @ {job.company}")
     print(f"Required skills: {', '.join(job.required_skills[:3])}...")
@@ -51,7 +52,7 @@ async def demo_single_analysis():
         agent = JobApplicationAgent()
 
         print("\nRunning agent workflow...")
-        result = await agent.invoke(job, resume)
+        result = await agent.invoke(job, resume, thread_id="demo-analysis-1")
 
         print("\n✓ Agent completed")
         print(f"Gap score: {result['skill_gaps'].gap_score:.2f}")

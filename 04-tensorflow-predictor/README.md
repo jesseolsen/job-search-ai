@@ -43,6 +43,15 @@ Text Input ──→ Embedding ──→ LSTM ──→ Dense ──→ Concaten
 Seniority Input ──→ Embedding ──→ Dense ────────────┘
 ```
 
+## Setup
+
+Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+Note: Uses `tf-nightly` for Python 3.14+ compatibility. Standard TensorFlow releases don't yet support Python 3.14.
+
 ## Running
 
 ### Training

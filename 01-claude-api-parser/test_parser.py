@@ -492,6 +492,7 @@ class TestBatchProcessing:
 class TestErrorHandling:
     """Test error handling and edge cases."""
 
+    @patch.dict(os.environ, {}, clear=True)
     def test_missing_api_key_raises_error(self):
         """Missing API key should raise ValueError."""
         with pytest.raises(ValueError, match="ANTHROPIC_API_KEY"):

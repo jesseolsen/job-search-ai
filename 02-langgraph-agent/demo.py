@@ -81,8 +81,14 @@ async def demo_checkpointing():
     print("\nGraph structure (Mermaid):")
     print("-" * 70)
     mermaid = agent.draw_mermaid()
-    # Print first 500 chars of mermaid
-    print(mermaid[:500] + "...")
+    print(mermaid)
+
+    # Save PNG
+    png_bytes = agent.draw_mermaid_png()
+    output_path = Path(__file__).parent / "graph.png"
+    with open(output_path, "wb") as f:
+        f.write(png_bytes)
+    print(f"\n✓ Graph saved to: {output_path}")
 
     print("\nCheckpointing enabled:")
     print("  - Each workflow step is saved")

@@ -51,6 +51,10 @@ downloads/
 model/
 models/
 
+# Generated diagrams
+**/graph.png
+**/graph.md
+
 # Environment
 .env
 .env.local
